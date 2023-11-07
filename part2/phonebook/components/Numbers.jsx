@@ -1,4 +1,5 @@
 import numberService from '../services/number'
+import '../src/index.css'
 
 const Numbers = ({ searchNumbers, persons, setPersons }) => {
     const deleteEntry = (id, personName) => {
@@ -17,7 +18,7 @@ const Numbers = ({ searchNumbers, persons, setPersons }) => {
     return (
         searchNumbers()
         .map( (person) => 
-            <div key={person.id}>
+            <div key={person.id} className='entry'>
                 {person.name}, {person.number} 
                 <button onClick={() => deleteEntry(person.id, person.name)}>Delete</button>
             </div>
