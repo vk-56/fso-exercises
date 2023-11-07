@@ -25,11 +25,20 @@ const App = () => {
     }
 
     const isPresent = persons.find( ({ name }) => name === newName)
-
+    
     if(isPresent) {
-      alert(`${newName} is already added to phonebook`)
-      setNewName('')
-      setNewNumber('')
+      if(confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        numberService
+          .update(isPresent.id, personObj)
+          .then(updatedPerson => {
+            setPersons(persons.map( person => person.id === isPresent.id ? updatedPerson : person))
+            setNewName('')
+            setNewNumber('')
+          })   
+      } else {
+        setNewName('')
+        setNewNumber('')
+      }
     }
     else {
       numberService
@@ -61,7 +70,11 @@ const App = () => {
         setNewNumber={setNewNumber}
       />
       <h2>Numbers</h2>
-      <Numbers searchNumbers={searchNumbers} />
+      <Numbers 
+        searchNumbers={searchNumbers} 
+        persons={persons}
+        setPersons={setPersons}  
+      />
     </div>
   )
 }
