@@ -12,7 +12,7 @@ const CountryList = ({ countries }) => {
         return(
             <main>
             {countries.map( (country) => 
-                <Country country={country} isSingle={false} />
+                <Country country={country}/>
             )}
             </main>
         )
@@ -22,7 +22,7 @@ const CountryList = ({ countries }) => {
         console.log(countries[0])
         return(
             <main>
-                <Country country={countries[0]} isSingle={true} />
+                <Country country={countries[0]}/>
             </main>
         )
     }

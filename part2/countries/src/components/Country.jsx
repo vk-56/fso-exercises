@@ -8,10 +8,9 @@ const Country = ({ country }) => {
         setIsShow(!isShow)
         label === 'show' ? setLabel('hide') : setLabel('show')
     }
-
     return (
         <>
-            <div>
+            <div key={country.name.common}>
                 {country.name.common}{" "}
                 <button 
                     onClick={toggleShow}
