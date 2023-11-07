@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
-import Axios from 'axios'
 import Numbers from '../components/Numbers'
 import Filter from '../components/Filter'
 import NumberForm from '../components/NumberForm'
+import numberService from '../services/number'
 
 const App = () => {
   useEffect(() => {
-    console.log('fetching data')
-    Axios
-      .get('http://localhost:3001/persons')
-      .then(response => setPersons(response.data))
+    numberService
+      .getAll()
+      .then(initialNumbers => setPersons(initialNumbers))
   }, [])
 
   const [persons, setPersons] = useState([])
@@ -22,8 +21,7 @@ const App = () => {
     event.preventDefault()
     const personObj = {
       name: newName,
-      number: newNumber,
-      id: Math.max(...persons.map( (person) => person.id )) + 1
+      number: newNumber
     }
 
     const isPresent = persons.find( ({ name }) => name === newName)
@@ -34,9 +32,13 @@ const App = () => {
       setNewNumber('')
     }
     else {
-      setPersons(persons.concat(personObj))
-      setNewName('')
-      setNewNumber('')
+      numberService
+        .create(personObj)
+        .then(returnedNumber => {
+          setPersons(persons.concat(returnedNumber))
+          setNewName('')
+          setNewNumber('')
+        })
     }
   }
 
